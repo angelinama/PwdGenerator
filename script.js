@@ -34,7 +34,7 @@ for (var i = 0; i < count; i ++) {
     /** Basic logic is: use one random number from 0..type - 1 for the type */
     var tIndex = Math.floor(Math.random() * types.length);
     var charType = types[tIndex];
-    
+
     if (charType === "num") {
         /*numeric character in 0..9, since already using string concatenate, simply using random number for 0-9 */
         result += Math.floor(Math.random() * 10);
@@ -45,12 +45,27 @@ for (var i = 0; i < count; i ++) {
     } else if (charType === "upper") {
         /* uppercase letter are from 65 to 90 */
         var n = Math.floor(Math.random() * 26) + 65;
-        console.log("current" + String.fromCharCode(n));
         result += String.fromCharCode(n);
     } else {
-        result += "?";
+        /* I did not include space here cuz i don't think space should be in password usually*/
+        const specials =  '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'; 
+        console.log(specials);
+        var n = Math.floor(Math.random() * specials.length);
+        result += specials.charAt(n);
     }
-
 }
 
-document.getElementById("result").textContent = result;
+var resultEl = document.getElementById("result");
+resultEl.textContent = result;
+/* Only enable copy to clipboard button after the result is shown up */
+var copyEl = document.getElementById("copyBtn");
+if (result !== "") {
+    copyEl.disabled = false;
+}
+
+/* only copy when the button is on click, so add event listener here */
+copyEl.addEventListener('click', () => {
+    resultEl.select();
+    document.execCommand('copy');
+    alert("You password '" + result + "' was copied");
+})
