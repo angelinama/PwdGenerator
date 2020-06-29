@@ -1,12 +1,17 @@
 var reload = document.getElementById('reload');
 
 reload.addEventListener('click', () => {
-    window.setTimeout(() => {
-        window.location.reload(true);
-    }, 200);
+    window.location.reload(true);
   });
 
-window.addEventListener("load", function(){
+window.addEventListener("load", (event) => {
+    window.setTimeout(() => {
+        main();
+    }, 100)
+
+});
+
+function main(){
     var count = prompt("How many characters would like your password to contain? ");
     var types = []
     var result = "";
@@ -80,5 +85,5 @@ window.addEventListener("load", function(){
         document.execCommand('copy');
         alert("You password '" + result + "' was copied");
     })  
-});
+}
 
