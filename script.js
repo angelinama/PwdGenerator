@@ -1,4 +1,5 @@
 var reload = document.getElementById('reload');
+
 reload.addEventListener('click', () => {
     window.setTimeout(() => {
         window.location.reload(true);
@@ -12,8 +13,10 @@ window.addEventListener("load", function(){
 
     if (count < 8) {
         alert("Password length must be at least 8 characters");
+        count = 0; //reset count so that result will not be updated
     } else if (count > 128) {
         alert("Password length must be less than 129 characters");
+        count = 0;
     } else {
         var hasNum = confirm("Click OK to include numeric characters.");
         var hasLowerCase = confirm("Click OK to include lowercase characters.");
@@ -21,6 +24,7 @@ window.addEventListener("load", function(){
         var hasSpecial = confirm("Click OK to include special characters.");
         /* Need a sanity check to make sure user did not choose false to all four char */
         if (!hasNum && !hasUpperCase && !hasLowerCase && !hasSpecial) {
+            count = 0; //reset count
             alert("Need to select at least one character type");
         }
     }
@@ -57,17 +61,16 @@ window.addEventListener("load", function(){
         } else {
             /* I did not include space here cuz i don't think space should be in password usually*/
             const specials =  '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'; 
-            console.log(specials);
             var n = Math.floor(Math.random() * specials.length);
             result += specials.charAt(n);
         }
     }
 
     var resultEl = document.getElementById("result");
-    resultEl.textContent = result;
-    /* Only enable copy to clipboard button after the result is shown up */
     var copyEl = document.getElementById("copyBtn");
     if (result !== "") {
+        resultEl.textContent = result;
+        /* Only enable copy to clipboard button after the result */
         copyEl.disabled = false;
     }
 
